@@ -616,7 +616,7 @@ class testcase extends tlObjectWithAttachments
     $tcase_version_id = $this->tree_manager->new_node($item->id,
                           $this->node_types_descr_id['testcase_version']);
 
-    $this->CKEditorCopyAndPasteCleanUp($item,array('summary','precondition')); 
+    $this->CKEditorCopyAndPasteCleanUp($item,array('summary','preconditions')); 
 
     $sql = "/* $debugMsg */ INSERT INTO {$this->tables['tcversions']} " .
            " (id,tc_external_id,version,summary,preconditions," .
@@ -5467,10 +5467,10 @@ class testcase extends tlObjectWithAttachments
         $countmain = 1;
 
         // Build custom fields filter
-        // do not worry!! it seems that filter criteria is OR, but really is an AND,
+        // do not worry!! it seems that filter criteria is OR, 
+        // but really is an AND,
         // OR is needed to do a simple query.
         // with processing on recordset becomes an AND
-        // BUGID 3995
         foreach ($cf_hash as $cf_id => $cf_value)
         {
           if ( $countmain != 1 )
@@ -5483,7 +5483,6 @@ class testcase extends tlObjectWithAttachments
 
             foreach ($cf_value as $value)
             {
-
               if ($count > 1)
               {
                 $cfQuery .= " AND ";
@@ -5494,7 +5493,7 @@ class testcase extends tlObjectWithAttachments
           }
           else
           {
-              $cfQuery .=  " ( CFDV.value LIKE '%{$cf_value}%' ) ";
+            $cfQuery .=  " ( CFDV.value LIKE '%{$cf_value}%' AND CFDV.field_id = {$cf_id} )";
           }
           $countmain++;
         }
@@ -6172,15 +6171,40 @@ class testcase extends tlObjectWithAttachments
    *
    *
    */
-  function setExecutionType($tcversionID,$value)
+  function setExecutionType($tcversionID,$value,$opt=null)
   {
     $debugMsg = 'Class:' . __CLASS__ . ' - Method: ' . __FUNCTION__;
-    $execType = intval($value);
+    
+    $my['opt'] = array('updSteps' => false);
+    $my['opt'] = array_merge($my['opt'],(array)$opt);
+
+    $execType = $this->db->prepare_int(intval($value));
+    $safeTCVID = $this->db->prepare_int($tcversionID);
+
     $sql = "/* $debugMsg */ " .
            " UPDATE {$this->tables['tcversions']} " .
-           " SET execution_type=" . $this->db->prepare_int($execType) .
-           " WHERE id = " . $this->db->prepare_int($tcversionID);
+           " SET execution_type={$execType} WHERE id = {$safeTCVID} ";
     $this->db->exec_query($sql);
+
+    if( $my['opt']['updSteps'] )
+    {
+      $opx = array('fields2get' => 'id');
+      $stepIDSet = $this->get_steps($safeTCVID,null,$opx);
+      
+      if( !is_null($stepIDSet) )
+      {
+        $target = array();
+        foreach($stepIDSet as $elem )
+        {
+          $target[] = $elem['id'];
+        }  
+        $inClause = implode(',',$target);
+        $sqlX = " UPDATE {$this->tables['tcsteps']} " .
+                " SET execution_type={$execType} WHERE id IN (" . $inClause . ")";
+        $this->db->exec_query($sqlX);
+      }  
+    }    
+
     return array($value,$execType,$sql);
   }
 
@@ -7661,5 +7685,8 @@ class testcase extends tlObjectWithAttachments
       $items->$fi = str_ireplace($offending,$good,$items->$fi);
     } 
   }
+
+
+
 
 }  // Class end
