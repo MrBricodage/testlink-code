@@ -2169,6 +2169,7 @@ $TLS_export_tcase_external_id = "Exporter l’ID externe des fiches de test";
 $TLS_export_with_prefix = 'Exporter le préfixe des fiches de test';
 
 $TLS_export_with_keywords = "Exporter les mots-clés";
+$TLS_export_attachments = "Exporter les pièces jointes";
 $TLS_warning_empty_filename = "Veuillez renseigner le nom du fichier.";
 $TLS_export_steps = "Exporter les étapes de test";
 $TLS_export_summary = "Exporter le résumé de test";
@@ -2904,6 +2905,7 @@ $TLS_same_externalID = "présente le même ID externe"; // (only applicable to T
 $TLS_same_name = "présente le même nom";
 $TLS_duplicate_criteria = "Considérer la fiche de test comme connue si elle";
 $TLS_hit_with_same_external_ID = "Ne peut pas être importée - Une fiche de test utilise déjà l'ID EXTERNE :";
+$TLS_attachment_skipped_during_import = "La pièce jointe \"%s\" a été ignorée car elle est déjà liée à l'élément de test.";
 
 // ----- lib/testcases/tcexport.php -----
 $TLS_no_testcases_to_export = "Aucune fiche de test pour l’export";
@@ -3264,6 +3266,9 @@ $TLS_audit_keyword_deleted = "Le mot-clé '{%1}' a été supprimé.";
 $TLS_audit_keyword_assigned_tc = "Le mot-clé '{%1}' a été affecté à la fiche de test '{%2}'.";
 $TLS_audit_keyword_assignment_removed_tc = "Le mot-clé '{%1}' a été désaffecté de la fiche de test '{%2}'.";
 
+$TLS_audit_exec_saved = "La fiche de test '{%1}' a été exécutée sur la version du produit '{%2}' dans la campagne '{%3}'.";
+$TLS_audit_exec_deleted = "Une exécution de la fiche de test '{%1}' sur la version du produit '{%2}' dans la campagne '{%3}' a été supprimée.";
+
 $TLS_audit_executionbug_added = "L’anomalie '{%1}' a été ajoutée pendant l’exécution.";
 $TLS_audit_executionbug_deleted = "L’anomalie '{%1}' a été déliée.".
                   "de l’exécution avec identifiant : {%2} de la fiche de test : {%3} " .
@@ -3291,6 +3296,10 @@ $TLS_audit_req_version_deleted = " La version {%1} de l’exigence 'DOCID : {%2}
 $TLS_audit_req_version_frozen = " La version {%1} de l’exigence 'DOCID : {%2}' - {%3} a été verrouillée.";
 $TLS_audit_req_version_unfrozen = " Version {%1} de l’exigence 'DOCID : {%2}' - {%3} a été déverrouillée.";
 
+$TLS_audit_testcase_created = "La fiche de test '{%1}' a été créée.";
+$TLS_audit_testcase_saved = "La fiche de test '{%1}' a été enregistrée.";
+$TLS_audit_testcase_deleted = "La fiche de test '{%1}' a été supprimée.";
+$TLS_audit_testcase_version_deleted = " La version {%1} de la fiche de test '{%2}' a été supprimée.";
 
 $TLS_audit_build_created = $TLS_testproject . " '{%1}' - " . $TLS_testplan . " '{%2}' a la version du produit '{%3}' qui a été créée.";
 $TLS_audit_build_saved = $TLS_testproject . " '{%1}' - " . $TLS_testplan . " '{%2}' a la version du produit '{%3}' qui a été enregistrée.";
@@ -3472,7 +3481,7 @@ $TLS_step_number_x_created_as_copy = "Etape # %s créée comme copie de %s";
 $TLS_edit_step_number_x = "Modifier l'étape # %s de la fiche de test %s en version %s";
 $TLS_create_step = "Créer un étape de test de la fiche de test %s en version %s";
 $TLS_delete_step = "Supprimer l'étape";
-$TLS_warning_delete_step = "<p>Etes-vous sûr de vouloir supprimer l'étape de test # %s ?</p>";
+$TLS_warning_delete_step = "<p>Etes-vous sûr de vouloir supprimer l\'étape de test # %s ?</p>";
 $TLS_warning_step_number = "Le numéro de l'étape de test doit être un entier positif.";
 $TLS_warning_step_number_already_exists = "L'étape # %s existe déjà.";
 
@@ -3486,6 +3495,7 @@ $TLS_import_req_spec_created = "Créé - Dossier d'exigences - Doc ID : %s";
 $TLS_import_req_spec_skipped = "Ignoré - Dossier d'exigences - Doc ID : %s - existe déjà dans une autre branche";
 $TLS_import_req_spec_updated = "Mis à jour - Dossier d'exigences - Doc ID : %s";
 $TLS_import_req_spec_ancestor_skipped = "Ignoré - Dossier d'exigences - Doc ID : %s - existe déjà dans une autre branche";
+$TLS_import_req_spec_attachment_skipped = "Ignoré - Pièce Jointe '%s' déjà liée au dossier d'exigences";
 
 $TLS_import_req_created = "Créé - Exigence - Doc ID : %s";
 $TLS_import_req_skipped = "Ignoré - Exigence - Doc ID : %s - existe déjà dans une autre branche";
@@ -3494,6 +3504,7 @@ $TLS_import_req_updated = "Mise à jour - Exigence - Doc ID : %s";
 $TLS_import_req_new_version_created = "Nouvelle version créée - Exigence - Doc ID : %s";
 $TLS_import_req_new_version_failed = "Création d’une nouvelle version échouée - %s";
 $TLS_import_req_update_last_version_failed = "Mise à jour de la dernière version échouée - %s";
+$TLS_import_req_attachment_skipped = "Ignoré - Pièce Jointe '%s' déjà liée à l'exigence";
 
 $TLS_import_done = "Import terminé";
 $TLS_import_syntax_error = "Import terminé, mais avec des erreurs de syntaxe";
